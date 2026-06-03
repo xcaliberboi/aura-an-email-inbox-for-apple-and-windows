@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: "/designer-clothing-website-test/",
+    base: "/aura-an-email-inbox-for-apple-and-windows/",
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
