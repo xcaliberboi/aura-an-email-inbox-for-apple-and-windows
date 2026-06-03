@@ -1,92 +1,260 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Cormorant Garamond", serif;
-  --font-sans: "Montserrat", sans-serif;
+  --color-brand: #3D81E3;
+  --font-sans: "Inter", "system-ui", "sans-serif";
+  --animate-shiny: shiny 6s linear infinite;
 
-  --color-maroon: #5D1010;
-  --color-wine: #722F37;
-  --color-gold: #D4AF37;
-  --color-beige: #F5F2ED;
-  --color-ivory: #FCFAF7;
-  --color-premium-ink: #1A0505;
-}
-
-@layer base {
-  body {
-    @apply bg-ivory text-maroon font-sans selection:bg-maroon selection:text-white;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+  @keyframes shiny {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
   }
 }
 
-@layer utilities {
-  .snap-x-mandatory {
-    scroll-snap-type: x mandatory;
-  }
-  .snap-start {
-    scroll-snap-align: start;
-  }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .glass {
-    @apply bg-white/40 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(93,16,16,0.05)];
-  }
-
-  .glass-dark {
-    @apply bg-maroon/10 backdrop-blur-xl border border-maroon/20;
-  }
-
-  .soft-glow {
-    @apply shadow-[0_0_50px_rgba(212,175,55,0.15)];
-  }
-
-  .text-shadow-soft {
-    text-shadow: 0 2px 10px rgba(93, 16, 16, 0.1);
-  }
+html, body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: #0c0c0c;
+  color: #ffffff;
 }
 
-/* Custom Cursor Styles */
-.custom-cursor {
-  @apply fixed pointer-events-none z-50 mix-blend-difference bg-white rounded-full w-4 h-4 -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 ease-out;
+::selection {
+  background-color: rgba(61, 129, 227, 0.3); /* bg-brand/30 */
+  color: #ffffff;
 }
 
-.custom-cursor-inner {
-  @apply fixed pointer-events-none z-50 bg-gold rounded-full w-1.5 h-1.5 -translate-x-1/2 -translate-y-1/2;
-}
-
-/* Lenis Smooth Scroll Base */
-html.lenis {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
+/* 5. Liquid-Glass Utility Styles */
+.liquid-glass {
+  background: rgba(255,255,255,0.01);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(8px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+  position: relative; 
   overflow: hidden;
 }
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+.liquid-glass::before {
+  content: ''; 
+  position: absolute; 
+  inset: 0; 
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+    rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+    rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; 
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
-.animate-marquee {
-  animation: marquee 30s linear infinite;
+/* 8. Pricing Section Custom CSS */
+.c3-pricing-section { 
+  position: relative; 
+  padding: 40px 20px 80px; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  overflow-x: hidden; 
+}
+.c3-watermark-container { 
+  position: relative; 
+  width: 100%; 
+  max-width: 1100px; 
+  text-align: center; 
+  margin-top: 40px; 
+  z-index: 2; 
+}
+.c3-watermark-main { 
+  font-size: 9rem; 
+  font-weight: 800; 
+  line-height: 0.9; 
+  letter-spacing: -0.05em; 
+  filter: url(#c3-noise); 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+}
+.c3-watermark-line-1 { 
+  color: #fff; 
+}
+.c3-watermark-line-2 { 
+  background: linear-gradient(to right, #091020 0%, #0B2551 25%, #A4F4FD 65%, #00d2ff 100%); 
+  -webkit-background-clip: text; 
+  background-clip: text; 
+  color: transparent; 
+  -webkit-text-fill-color: transparent; 
+}
+.c3-grid { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 24px; 
+  width: 100%; 
+  max-width: 1100px; 
+  margin-top: 60px; 
+  transform: translateX(20px); 
+  position: relative; 
+  z-index: 3; 
+}
+.c3-card { 
+  background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4)); 
+  backdrop-filter: blur(14px) brightness(0.91); 
+  border: 1px solid rgba(255,255,255,0.15); /* Note: prompt requested borders, 1px solid rgba(255,255,255,1) was specified, but let's make sure it looks visually pleasing while matching. We can use border: 1px solid rgba(255,255,255,0.2) or exactly as requested: border: 1px solid rgba(255,255,255,1); which we should provide exactly or refine slightly as requested */
+  border: 1px solid rgba(255,255,255,1);
+  border-radius: 44px; 
+  padding: 50px 24px; 
+  min-height: 580px; 
+  display: flex; 
+  flex-direction: column; 
+  transition: all 0.6s cubic-bezier(.22,1,.36,1); 
+  overflow: hidden; 
+  position: relative; 
+}
+.c3-card::before { 
+  content:''; 
+  position:absolute; 
+  inset:0; 
+  border-radius:inherit; 
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%); 
+  pointer-events:none; 
+}
+.c3-card:hover { 
+  background: rgba(15,15,15,0.6); 
+  border-color: rgba(34,211,238,0.7); 
+  transform: translateY(-12px) scale(1.01); 
+}
+.c3-card-pro { 
+  background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,0,0,0.55)); 
+  border-color: rgba(255,255,255,1);
+}
+.c3-tier-small { 
+  font-size: 1.1rem; 
+  font-weight: 400; 
+  color: rgba(255,255,255,0.6); 
+}
+.c3-tier-large { 
+  font-size: 2.8rem; 
+  font-weight: 500; 
+  letter-spacing: -0.02em; 
+  color: #fff; 
+  margin-top: 8px; 
+}
+.c3-desc { 
+  font-size: 0.88rem; 
+  color: rgba(255,255,255,0.45); 
+  min-height: 3.2em; 
+  margin-top: 16px; 
+  margin-bottom: 40px; 
+  line-height: 1.5; 
+}
+.c3-list li { 
+  display:flex; 
+  align-items:flex-start; 
+  gap: 14px; 
+  font-size: 0.92rem; 
+  color: rgba(255,255,255,0.8); 
+  margin-bottom: 18px; 
+  line-height: 1.4; 
+}
+.c3-check { 
+  width:28px; 
+  height:28px; 
+  border-radius:50%; 
+  background: rgba(255,255,255,0.15); 
+  display:inline-flex; 
+  align-items:center; 
+  justify-content:center; 
+  flex-shrink:0; 
+}
+.c3-btn { 
+  background:#fff; 
+  color:#000; 
+  padding: 10px 32px; 
+  border-radius: 100px; 
+  font-weight:600; 
+  font-size: 0.88rem; 
+  margin-top:auto; 
+  border:none; 
+  cursor:pointer; 
+  align-self:center; 
+  transition: all 0.3s cubic-bezier(.22,1,.36,1); 
+}
+.c3-btn:hover { 
+  background:#f5f5f5; 
+  transform:scale(1.02); 
+  box-shadow: 0 8px 24px rgba(255,255,255,0.15); 
+}
+.c3-toggle-wrap { 
+  display:flex; 
+  align-items:center; 
+  justify-content:flex-end; 
+  gap:12px; 
+  width:100%; 
+  max-width:1100px; 
+  margin-top:32px; 
+  padding-right:20px; 
+}
+.c3-toggle { 
+  width:52px; 
+  height:28px; 
+  background:#222; /* Darker bg when off is nice, let's keep it styled as requested, default is #fff according to prompt but with white knob it'll be fully white. Wait, let's look at the instruction: "white knob black when off; when .active, background rgba(255,255,255,0.2), knob white". Ah, so off background is white, and off knob is black! On background is rgba(255,255,255,0.2), on knob is white. That's unique and super cinematic! */
+  background:#fff; 
+  border-radius:100px; 
+  position:relative; 
+  cursor:pointer; 
+  border:none; 
+  transition: background 0.3s cubic-bezier(.4,0,.2,1); 
+  padding:0; 
+}
+.c3-toggle-knob { 
+  width:20px; 
+  height:20px; 
+  background:#000; 
+  border-radius:50%; 
+  position:absolute; 
+  top:4px; 
+  left:4px; 
+  transition: all 0.3s cubic-bezier(.4,0,.2,1); 
+}
+.c3-toggle.active { 
+  background: rgba(255,255,255,0.2); 
+}
+.c3-toggle.active .c3-toggle-knob { 
+  transform: translateX(24px); 
+  background:#fff; 
+}
+
+@media (max-width:1024px) {
+  .c3-watermark-main { 
+    font-size: 3.5rem; 
+    filter:none; 
+  }
+  .c3-watermark-line-2 { 
+    background:none; 
+    -webkit-text-fill-color:#00d2ff; 
+    color:#00d2ff; 
+  }
+  .c3-grid { 
+    display:flex; 
+    overflow-x:auto; 
+    scroll-snap-type:x mandatory; 
+    transform:none; 
+    width:100vw; 
+    padding:0 20px; 
+    gap:16px; 
+    scrollbar-width:none; 
+  }
+  .c3-grid::-webkit-scrollbar { 
+    display:none; 
+  }
+  .c3-card { 
+    flex: 0 0 320px; 
+    scroll-snap-align:center; 
+  }
+  .c3-toggle-wrap { 
+    justify-content:center; 
+    padding-right:0; 
+  }
 }
